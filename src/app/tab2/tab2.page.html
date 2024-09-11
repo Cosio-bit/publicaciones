@@ -1,17 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Card Title</ion-card-title>
+    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+  </ion-card-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Input for Title -->
+  <ion-item>
+    <ion-label position="floating">Título</ion-label>
+    <ion-input [(ngModel)]="publication.title"></ion-input>
+  </ion-item>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
-</ion-content>
+  <!-- Input for Subtitles -->
+  <ion-item>
+    <ion-label position="floating">Subtítulo</ion-label>
+    <ion-input [(ngModel)]="publication.subtitle"></ion-input>
+  </ion-item>
+
+  <!-- Input for Description -->
+  <ion-item>
+    <ion-label position="floating">Descripción</ion-label>
+    <ion-textarea [(ngModel)]="publication.description"></ion-textarea>
+  </ion-item>
+
+  <!-- Photo Upload -->
+  <ion-item>
+    <ion-label position="stacked">Foto</ion-label>
+    <input type="file" (change)="onFileSelected($event)">
+  </ion-item>
+
+ <!-- Save Button -->
+ <ion-button expand="block" (click)="savePublication()">Guardar Publicación</ion-button>
+
+ <!-- Show Saved Publication -->
+ <ion-card *ngIf="savedPublication">
+  <ion-card-header>
+    <ion-card-title>{{ savedPublication.title }}</ion-card-title>
+    <ion-card-subtitle>{{ savedPublication.subtitle }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <img *ngIf="savedPublication.photo" [src]="savedPublication.photo" alt="Photo">
+    <p>{{ savedPublication.description }}</p>
+  </ion-card-content>
+</ion-card>
+
+
+</ion-card>

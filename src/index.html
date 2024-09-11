@@ -14,13 +14,23 @@
 
   <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
-  <!-- add to homescreen for ios -->
+  <!-- Load Capacitor and Jeep SQLite scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@capacitor/core@latest/dist/capacitor.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@capacitor-community/sqlite@latest/dist/jeep-sqlite.js"></script>
+
+  <!-- Add to homescreen for iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 
 <body>
   <app-root></app-root>
+
+  <!-- Include your Angular and other app scripts here -->
+  <script src="runtime.js" defer></script>
+  <script src="polyfills.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 
 </html>

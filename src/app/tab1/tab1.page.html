@@ -1,17 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-title>Publicaciones Guardadas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list *ngIf="publications.length > 0; else noPublications">
+    <ion-item *ngFor="let pub of publications">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ pub.title }}</ion-card-title>
+          <ion-card-subtitle>{{ pub.subtitle }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <img *ngIf="pub.photo" [src]="pub.photo" alt="Photo">
+          <p>{{ pub.description }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <!-- Show this if there are no publications -->
+  <ng-template #noPublications>
+    <ion-item>
+      <ion-label>No hay publicaciones guardadas</ion-label>
+    </ion-item>
+  </ng-template>
 </ion-content>
