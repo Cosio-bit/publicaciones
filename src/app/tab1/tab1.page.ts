@@ -18,13 +18,14 @@ export class Tab1Page implements OnInit {
   async ngOnInit() {
     try {
       const allPublications = await this.publicationService.getPublications() || [];
-      // Filtrar publicaciones vacías
       this.publications = allPublications.filter(pub => pub.title && pub.description);
       console.log('Publications retrieved:', this.publications);
+      this.changeDetector.detectChanges(); // Force change detection
     } catch (error) {
       console.error('Error fetching publications:', error);
     }
   }
+  
   
   
 }
