@@ -28,6 +28,8 @@
     "@capacitor/keyboard": "6.0.2",
     "@capacitor/status-bar": "6.0.1",
     "@ionic/angular": "^8.3.0",
+    "@ionic/storage": "^4.0.0",
+    "@ionic/storage-angular": "^4.0.0",
     "buffer": "^6.0.3",
     "cordova-sqlite-storage": "^6.1.0",
     "crypto-browserify": "^3.12.0",

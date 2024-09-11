@@ -4,14 +4,23 @@ const webpack = require('webpack');
 module.exports = {
   resolve: {
     fallback: {
+      "fs": false, // Ignore the fs module
       "path": require.resolve("path-browserify"),
+      "vm": require.resolve("vm-browserify"),
+      "stream": require.resolve("stream-browserify"),
       "crypto": require.resolve("crypto-browserify"),
-      "fs": false // Disable fs polyfill if not needed
+      "buffer": require.resolve("buffer"),
+      "process": require.resolve("process")
+    },
+    alias: {
+      'process': 'process/browser',
+      'buffer': 'buffer'
     }
   },
   plugins: [
     new webpack.ProvidePlugin({
-      process: 'process/browser', // Add this line if you encounter process issues
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser'
     })
   ]
 };

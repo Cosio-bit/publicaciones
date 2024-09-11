@@ -6,6 +6,9 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Import Ionic Storage
+import { IonicStorageModule } from '@ionic/storage-angular';
+
 // Import the services
 import { SQLiteService } from './services/sqlite.service';
 import { PublicationService } from './services/publication.service';
@@ -15,7 +18,10 @@ import { PublicationService } from './services/publication.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+
+    // Import IonicStorageModule and initialize it
+    IonicStorageModule.forRoot()
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

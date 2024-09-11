@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PublicationService } from '../services/publication.service'; // Import the service
+import { PublicationService } from '../services/publication.service';
+import { ChangeDetectorRef } from '@angular/core'; // Importa ChangeDetectorRef
 
 @Component({
   selector: 'app-tab1',
@@ -7,17 +8,23 @@ import { PublicationService } from '../services/publication.service'; // Import 
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  publications: any[] = []; // Array to store publications
+  publications: any[] = [];
 
-  constructor(private publicationService: PublicationService) {}
+  constructor(
+    private publicationService: PublicationService,
+    private changeDetector: ChangeDetectorRef // Injecta ChangeDetectorRef
+  ) {}
 
   async ngOnInit() {
     try {
-      // Ensure SQLiteService is initialized before fetching data
-      this.publications = await this.publicationService.getPublications() || [];
-      console.log('Publications retrieved:', this.publications);  // Debugging
+      const allPublications = await this.publicationService.getPublications() || [];
+      // Filtrar publicaciones vacías
+      this.publications = allPublications.filter(pub => pub.title && pub.description);
+      console.log('Publications retrieved:', this.publications);
     } catch (error) {
       console.error('Error fetching publications:', error);
     }
   }
+  
+  
 }

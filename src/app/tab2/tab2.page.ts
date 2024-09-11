@@ -28,20 +28,27 @@ export class Tab2Page {
 
     reader.readAsDataURL(file);
   }
-
   async savePublication() {
-    this.savedPublication = { ...this.publication };
-    await this.publicationService.addPublication(this.publication);
-    console.log('Saving publication:', this.publication);
-
-    const publications = await this.publicationService.getPublications();
-    console.log('Publications:', publications);
-
-    this.publication = {
-      title: '',
-      subtitle: '',
-      description: '',
-      photo: ''
-    };
+    if (this.publication.title && this.publication.description) {
+      this.savedPublication = { ...this.publication };
+      console.log('Saved photo data:', this.publication.photo);
+  
+      await this.publicationService.addPublication(this.publication);
+      console.log('Publicación guardada:', this.publication);
+  
+      const publications = await this.publicationService.getPublications();
+      console.log('Publicaciones:', publications);
+  
+      // Limpiar el formulario solo después de guardar
+      this.publication = {
+        title: '',
+        subtitle: '',
+        description: '',
+        photo: ''
+      };
+    } else {
+      console.warn('No se puede guardar una publicación vacía');
+    }
   }
+  
 }
