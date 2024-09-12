@@ -8,6 +8,7 @@
   <ion-item>
     <ion-label position="floating">Título</ion-label>
     <ion-input [(ngModel)]="publication.title"></ion-input>
+    <ion-note color="danger" *ngIf="errors.title">{{ errors.title }}</ion-note>
   </ion-item>
 
   <!-- Input for Subtitles -->
@@ -20,6 +21,7 @@
   <ion-item>
     <ion-label position="floating">Descripción</ion-label>
     <ion-textarea [(ngModel)]="publication.description"></ion-textarea>
+    <ion-note color="danger" *ngIf="errors.description">{{ errors.description }}</ion-note>
   </ion-item>
 
   <!-- Photo Upload -->
@@ -28,20 +30,18 @@
     <input type="file" (change)="onFileSelected($event)">
   </ion-item>
 
- <!-- Save Button -->
- <ion-button expand="block" (click)="savePublication()">Guardar Publicación</ion-button>
+  <!-- Save Button -->
+  <ion-button expand="block" (click)="savePublication()">Guardar Publicación</ion-button>
 
- <!-- Show Saved Publication -->
- <ion-card *ngIf="savedPublication">
-  <ion-card-header>
-    <ion-card-title>{{ savedPublication.title }}</ion-card-title>
-    <ion-card-subtitle>{{ savedPublication.subtitle }}</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <img *ngIf="savedPublication.photo" [src]="savedPublication.photo" alt="Photo">
-    <p>{{ savedPublication.description }}</p>
-  </ion-card-content>
-</ion-card>
-
-
+  <!-- Show Saved Publication -->
+  <ion-card *ngIf="savedPublication">
+    <ion-card-header>
+      <ion-card-title>{{ savedPublication.title }}</ion-card-title>
+      <ion-card-subtitle>{{ savedPublication.subtitle }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <img *ngIf="savedPublication.photo" [src]="savedPublication.photo" alt="Photo">
+      <p>{{ savedPublication.description }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-card>

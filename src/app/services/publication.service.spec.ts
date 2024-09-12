@@ -31,7 +31,7 @@ describe('PublicationService', () => {
   });
 
   it('should add a publication and save it in storage', async () => {
-    const mockPublication = { title: 'Test', subtitle: 'Subtitle', description: 'Test description', photo: 'photo-url' };
+    const mockPublication = { title: 'Test', subtitle: 'Subtitle', description: 'Test description', photo: 'photo-url' ,date: new Date()};
 
     // Simular el método set() para guardar en storage
     storageSpy.set.and.returnValue(Promise.resolve());

@@ -1,27 +1,30 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PublicationService } from '../services/publication.service';
-import { ViewWillEnter } from '@ionic/angular'; // Import IonViewWillEnter
+import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component'; // Adjust path if necessary
+import { DatePipe } from '@angular/common'; // Import DatePipe
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
+  providers: [DatePipe] // Add DatePipe to providers
 })
 export class Tab1Page implements OnInit, ViewWillEnter {
   publications: any[] = [];
 
   constructor(
     private publicationService: PublicationService,
-    private changeDetector: ChangeDetectorRef // Inject ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private modalController: ModalController,
+    private datePipe: DatePipe // Inject DatePipe
   ) {}
 
   async ngOnInit() {
-    // Initial data fetch when the component initializes
     await this.refreshData();
   }
 
   async ionViewWillEnter() {
-    // Refresh data every time the page is about to enter
     await this.refreshData();
   }
 
@@ -31,20 +34,29 @@ export class Tab1Page implements OnInit, ViewWillEnter {
       console.log('All publications retrieved:', allPublications);
       this.publications = allPublications.filter(pub => pub.title && pub.description);
       console.log('Filtered publications:', this.publications);
-      this.changeDetector.detectChanges(); // Force change detection if necessary
+      this.changeDetector.detectChanges();
     } catch (error) {
       console.error('Error fetching publications:', error);
     }
   }
 
   async deletePublication(index: number): Promise<void> {
-    try {
-      await this.publicationService.deletePublication(index);
-      this.publications.splice(index, 1);
-      this.changeDetector.detectChanges(); // Force change detection if necessary
-      console.log('Publication deleted');
-    } catch (error) {
-      console.error('Error deleting publication:', error);
+    const modal = await this.modalController.create({
+      component: DeleteConfirmationModalComponent
+    });
+
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+
+    if (data?.confirmed) {
+      try {
+        await this.publicationService.deletePublication(index);
+        this.publications.splice(index, 1);
+        this.changeDetector.detectChanges();
+        console.log('Publication deleted');
+      } catch (error) {
+        console.error('Error deleting publication:', error);
+      }
     }
   }
 
@@ -52,9 +64,13 @@ export class Tab1Page implements OnInit, ViewWillEnter {
     try {
       await this.publicationService.clearStorage();
       console.log('Storage cleared');
-      await this.refreshData(); // Refresh data after clearing storage
+      await this.refreshData();
     } catch (error) {
       console.error('Error clearing storage:', error);
     }
+  }
+
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'shortDate') || '';
   }
 }

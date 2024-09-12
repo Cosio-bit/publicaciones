@@ -13,21 +13,26 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { SQLiteService } from './services/sqlite.service';
 import { PublicationService } from './services/publication.service';
 
+// Import the modal component
+import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component'; // Ajusta la ruta si es necesario
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    DeleteConfirmationModalComponent // Asegúrate de declarar el componente del modal aquí
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-
-    // Import IonicStorageModule and initialize it
     IonicStorageModule.forRoot()
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    SQLiteService, // Add SQLiteService here
-    PublicationService // Add PublicationService here
+    SQLiteService,
+    PublicationService
   ],
   bootstrap: [AppComponent],
+
 })
 export class AppModule {}
