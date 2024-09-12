@@ -24,14 +24,16 @@
     <ion-note color="danger" *ngIf="errors.description">{{ errors.description }}</ion-note>
   </ion-item>
 
+   <!-- Save Button -->
+   <ion-button expand="block" (click)="savePublication()">Guardar Publicación</ion-button>
+
   <!-- Photo Upload -->
   <ion-item>
     <ion-label position="stacked">Foto</ion-label>
-    <input type="file" (change)="onFileSelected($event)">
+    <ion-button expand="full" (click)="capturePhoto()">Capturar Foto</ion-button>
+    <img *ngIf="publication.photo" [src]="publication.photo" alt="Photo" style="width: 100%; margin-top: 10px;">
   </ion-item>
 
-  <!-- Save Button -->
-  <ion-button expand="block" (click)="savePublication()">Guardar Publicación</ion-button>
 
   <!-- Show Saved Publication -->
   <ion-card *ngIf="savedPublication">

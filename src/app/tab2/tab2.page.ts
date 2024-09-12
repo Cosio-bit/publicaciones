@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
 import { PublicationService } from '../services/publication.service';
 
 @Component({
@@ -11,8 +12,8 @@ export class Tab2Page {
     title: '',
     subtitle: '',
     description: '',
-    photo: '',
-    date: new Date() // Add date property
+    photo: '', // Inicializado como una cadena vacía
+    date: new Date()
   };
 
   savedPublication: any;
@@ -20,15 +21,18 @@ export class Tab2Page {
 
   constructor(private publicationService: PublicationService) {}
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+  async capturePhoto() {
+    try {
+      const photo = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl
+      });
 
-    reader.onload = (e: any) => {
-      this.publication.photo = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
+      this.publication.photo = photo.dataUrl || ''; // Asegúrate de que sea una cadena
+    } catch (error) {
+      console.error('Error capturing photo', error);
+    }
   }
 
   validatePublication() {
@@ -64,7 +68,7 @@ export class Tab2Page {
         title: '',
         subtitle: '',
         description: '',
-        photo: '',
+        photo: '', // Reiniciar con una cadena vacía
         date: new Date()
       };
     } else {
