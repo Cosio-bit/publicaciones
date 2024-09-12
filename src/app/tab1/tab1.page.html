@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list *ngIf="publications.length > 0; else noPublications">
-    <ion-item *ngFor="let pub of publications">
+    <ion-item *ngFor="let pub of publications; let i = index">
       <ion-card>
         <ion-card-header>
           <ion-card-title>{{ pub.title }}</ion-card-title>
@@ -15,6 +15,7 @@
         <ion-card-content>
           <img *ngIf="pub.photo" [src]="pub.photo" alt="Photo">
           <p>{{ pub.description }}</p>
+          <ion-button (click)="deletePublication(i)" color="danger">Delete</ion-button>
         </ion-card-content>
       </ion-card>
     </ion-item>
